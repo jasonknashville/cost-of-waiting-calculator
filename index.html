@@ -2,364 +2,559 @@
 <html lang="en">
 <head>
   <!-- Google Tag Manager -->
-<script>
-  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-MH9X9NGV');
-</script>
-<!-- End Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MH9X9NGV');
+  </script>
+  <!-- End Google Tag Manager -->
 
   <meta charset="UTF-8" />
-  <title>Cost of Waiting Calculator • Jason Kaczmarski Team</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --bg: #f4f5f7;
-      --card-bg: #ffffff;
-      --accent: #004fbf;
-      --accent-soft: #e3efff;
-      --text-main: #1f2933;
-      --text-muted: #6b7280;
-      --border: #d1d5db;
-      --error: #b91c1c;
-      --radius-lg: 12px;
-      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
-    }
+  <title>Cost of Waiting Calculator | Jason Kaczmarski Team</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #d81f26;
+      --blue: #1f4fa3;
+      --blue-dark: #163d82;
+      --blue-mid: #2d57a5;
+      --blue-light: #eef3ff;
+      --gold: #f0b429;
+      --gold-light: #fef9ec;
+      --text: #1a1a2e;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f7f8fc;
+      --white: #ffffff;
+      --green: #16a34a;
+      --error: #b91c1c;
     }
 
     body {
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(circle at top left, #e5f0ff 0, #f9fafb 50%);
-      color: var(--text-main);
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
     }
 
-    .page-wrap {
-      min-height: 100vh;
+    /* ── HEADER ── */
+    .header {
+      background: var(--red);
+      padding: 16px 24px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
     }
+    .header img { max-width: 200px; }
 
-    .card {
-      width: 100%;
-      max-width: 980px;
-      background: var(--card-bg);
-      border-radius: 16px;
-      box-shadow: var(--shadow-soft);
-      padding: 24px;
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
-      gap: 32px;
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+      color: white;
+      padding: 52px 20px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
-
-    @media (max-width: 900px) {
-      .card {
-        grid-template-columns: 1fr;
-        max-width: 640px;
-      }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
     }
-
-    .card-header {
-      margin-bottom: 16px;
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      opacity: .7;
+      margin-bottom: 12px;
+      position: relative;
     }
-
-    .title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin: 0 0 4px;
-      letter-spacing: 0.02em;
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 50px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      position: relative;
     }
-
-    .subtitle {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin: 0;
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: 15px;
+      opacity: .8;
+      max-width: 560px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+      position: relative;
     }
-
     .pill-row {
       display: flex;
-      flex-wrap: wrap;
       gap: 8px;
-      margin-top: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
     }
-
     .pill {
-      font-size: 0.75rem;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: #1d4ed8;
-      border: 1px solid rgba(37, 99, 235, 0.12);
-      white-space: nowrap;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 99px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .04em;
     }
 
+    /* ── MAIN LAYOUT ── */
+    .main {
+      max-width: 1060px;
+      margin: 32px auto 60px;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 2px 20px rgba(0,0,0,.07);
+      overflow: hidden;
+    }
+    .card-header {
+      padding: 24px 28px 0;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* ── TWO-COLUMN CALCULATOR LAYOUT ── */
+    .calc-body {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+      gap: 0;
+    }
+    @media (max-width: 720px) {
+      .calc-body { grid-template-columns: 1fr; }
+    }
+
+    .calc-inputs {
+      padding: 20px 28px 28px;
+      border-right: 1px solid var(--border);
+    }
+    @media (max-width: 720px) {
+      .calc-inputs { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+
+    .calc-results {
+      padding: 20px 28px 28px;
+    }
+
+    /* ── SECTION LABEL ── */
     .section-label {
-      font-size: 0.8rem;
+      font-size: 10px;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: var(--text-muted);
-      margin: 16px 0 6px;
+      letter-spacing: .12em;
+      color: var(--muted);
+      margin: 20px 0 10px;
     }
+    .section-label:first-child { margin-top: 0; }
 
+    /* ── FORM GRID ── */
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 12px 16px;
     }
-
-    @media (max-width: 600px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
+    .form-grid.single { grid-template-columns: 1fr; }
+    @media (max-width: 540px) {
+      .form-grid { grid-template-columns: 1fr; }
     }
 
     .field {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
     }
 
     label {
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
     }
-
-    label span.hint {
-      font-size: 0.7rem;
-      color: var(--text-muted);
+    label .hint {
+      font-size: 10px;
+      color: var(--muted);
       font-weight: 400;
+      display: block;
+      margin-top: 1px;
     }
 
-    input[type="number"],
-    input[type="text"] {
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      padding: 8px 10px;
-      font-size: 0.9rem;
-      outline: none;
-      transition: border-color 0.12s ease, box-shadow 0.12s ease;
-      width: 100%;
-    }
-
-    input[type="number"]:focus,
-    input[type="text"]:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.3);
-    }
-
-    .input-prefix {
+    .input-wrap {
       display: flex;
       align-items: center;
-      gap: 6px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .input-wrap:focus-within {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(31,79,163,0.12);
+    }
+    .input-affix {
+      padding: 0 10px;
+      font-size: 13px;
+      color: var(--muted);
+      background: #f8fafc;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      border-right: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .input-affix.suffix {
+      border-right: none;
+      border-left: 1px solid var(--border);
+    }
+    input[type="text"] {
+      border: none;
+      outline: none;
+      padding: 0 10px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      width: 100%;
+      height: 38px;
+      background: transparent;
+      color: var(--text);
+    }
+    input[type="text"]::placeholder { color: #b0bac4; }
+
+    /* standalone input (no affix) */
+    .input-standalone {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0 10px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      width: 100%;
+      height: 38px;
+      background: white;
+      color: var(--text);
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .input-standalone:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(31,79,163,0.12);
     }
 
-    .input-prefix span {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
+    /* ── BUTTONS ── */
     .btn-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 18px;
+      margin-top: 22px;
     }
-
     button {
       border-radius: 999px;
       border: none;
-      font-size: 0.9rem;
+      font-size: 14px;
       font-weight: 600;
-      padding: 9px 18px;
+      font-family: 'DM Sans', sans-serif;
+      padding: 10px 22px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.12s ease;
+      transition: transform .08s ease, box-shadow .08s ease, background .12s ease;
       white-space: nowrap;
     }
-
     button.primary {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: #ffffff;
-      box-shadow: 0 12px 25px rgba(37, 99, 235, 0.35);
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      color: white;
+      box-shadow: 0 8px 20px rgba(31,79,163,0.35);
     }
-
-    button.primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 32px rgba(37, 99, 235, 0.4);
-    }
-
+    button.primary:hover { transform: translateY(-1px); box-shadow: 0 12px 28px rgba(31,79,163,0.4); }
     button.secondary {
       background: #f3f4f6;
-      color: #111827;
+      color: var(--text);
       border: 1px solid #e5e7eb;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
     }
+    button.secondary:hover { transform: translateY(-1px); background: #e5e7eb; }
 
-    button.secondary:hover {
-      transform: translateY(-1px);
-      background: #e5e7eb;
-    }
-
-    .button-icon {
-      font-size: 1rem;
-    }
-
-    .error {
-      font-size: 0.8rem;
+    /* ── ERROR ── */
+    .error-msg {
+      font-size: 12px;
       color: var(--error);
-      margin-top: 6px;
+      margin-top: 10px;
       display: none;
     }
 
-    .results {
-      border-radius: var(--radius-lg);
-      border: 1px solid #e5e7eb;
-      padding: 16px 18px;
-      background: radial-gradient(circle at top left, #eff6ff 0, #ffffff 55%);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-height: 160px;
-    }
-
+    /* ── RESULTS ── */
     .results-header {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .results-tag {
+      font-size: 11px;
+      padding: 3px 12px;
+      border-radius: 99px;
+      border: 1px solid rgba(16,185,129,0.3);
+      color: #047857;
+      background: rgba(167,243,208,0.15);
+      white-space: nowrap;
+    }
+    .results-tag.pending {
+      border-color: rgba(100,116,139,0.3);
+      color: var(--muted);
+      background: rgba(100,116,139,0.06);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
-
-    .results-title {
-      font-size: 1rem;
-      font-weight: 600;
+    @media (max-width: 540px) {
+      .metrics-grid { grid-template-columns: 1fr; }
     }
 
-    .results-tag {
-      font-size: 0.75rem;
-      padding: 3px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: #047857;
-      background: rgba(167, 243, 208, 0.15);
+    .metric-box {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
     }
-
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px 18px;
-      margin-top: 8px;
+    .metric-box.accent {
+      background: var(--blue-light);
+      border-color: var(--blue-mid);
     }
-
-    @media (max-width: 600px) {
-      .results-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .metric {
-      font-size: 0.85rem;
-    }
-
     .metric-label {
-      color: var(--text-muted);
-      margin-bottom: 2px;
-    }
-
-    .metric-value {
+      font-size: 10px;
       font-weight: 600;
-    }
-
-    .highlight {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #1d4ed8;
-    }
-
-    .note {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--muted);
+      margin-bottom: 5px;
       line-height: 1.4;
     }
+    .metric-box.accent .metric-label { color: var(--blue-mid); }
+    .metric-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+    .metric-box.accent .metric-value { color: var(--blue); }
+    .metric-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
 
-    .lease-note {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 4px;
+    /* ── NOTE BOX ── */
+    .note-box {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      background: var(--gold-light);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+    }
+    .note-box strong { color: var(--text); }
+
+    /* ── CHART CARD ── */
+    .tab-bar {
+      display: flex;
+      padding: 0 28px;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .tab-bar::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      padding: 12px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--muted);
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: color .15s, border-color .15s;
+    }
+    .tab-btn:hover { color: var(--blue); }
+    .tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+    .chart-wrap { padding: 20px 28px 24px; }
+
+    /* ── CONTEXT BANNER ── */
+    .context-banner {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 16px 24px;
+      border-left: 4px solid var(--blue);
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .context-banner strong { color: var(--text); }
+
+    /* ── CTA ── */
+    .cta-card {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+      color: white;
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-card::before {
+      content: '🏡';
+      position: absolute;
+      font-size: 180px;
+      opacity: .05;
+      right: -30px;
+      bottom: -40px;
+      pointer-events: none;
+    }
+    .cta-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+    .cta-card h2 em { font-style: italic; color: var(--gold); }
+    .cta-card p {
+      font-size: 15px;
+      opacity: .85;
+      max-width: 500px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: white;
+      color: var(--blue);
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+    }
+    .cta-btn:hover { background: var(--gold); color: var(--text); transform: translateY(-2px); }
+    .cta-sub { font-size: 12px; opacity: .6; margin-top: 12px; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--blue);
+      color: white;
+      text-align: center;
+      padding: 18px 20px;
+      font-size: 13px;
+    }
+    .footer a { color: var(--gold); text-decoration: none; }
+    .footer .disclaimer {
+      margin-top: 8px;
+      font-size: 10px;
+      opacity: .55;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 700px) {
+      .cta-card { padding: 28px 20px; }
+      .chart-wrap { padding: 16px 12px 20px; }
     }
   </style>
 </head>
 <body>
-  <!-- Google Tag Manager (noscript) -->
+
+<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MH9X9NGV"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
-  <div class="page-wrap">
-    <div class="card">
-      <!-- LEFT: Inputs -->
-      <div>
-        <div class="card-header">
-          <h1 class="title">Cost of Waiting Calculator</h1>
-          <p class="subtitle">
-            See how long it takes to “earn back” the rent you pay while waiting for lower mortgage rates — and what buying sooner could mean for your equity.
-          </p>
-          <div class="pill-row">
-            <div class="pill">Current rate default: 6.25%</div>
-            <div class="pill">Removes commas in inputs</div>
-            <div class="pill">No email or phone required to calculate</div>
-          </div>
-        </div>
+<!-- HEADER -->
+<div class="header">
+  <img src="https://kvcore-library.s3.amazonaws.com/remax1stchoice8207/images/03b9616f75a8e185d56a93c799829fdf.png" alt="RE/MAX 1st Choice – Jason Kaczmarski Team">
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Nashville &amp; Middle Tennessee &nbsp;·&nbsp; Buyer Decision Tool</div>
+  <h1>Cost of<br><em>Waiting Calculator</em></h1>
+  <p class="hero-sub">See how long it takes to "earn back" the rent you pay while waiting for lower mortgage rates — and what buying sooner could mean for your equity.</p>
+  <div class="pill-row">
+    <span class="pill">Current rate default: 6.25%</span>
+    <span class="pill">No email required to calculate</span>
+    <span class="pill">3% annual appreciation assumption</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- CONTEXT BANNER -->
+  <div class="context-banner">
+    <strong>How this tool works:</strong> Enter your home price, current rate, the rate you're waiting for, and how long you plan to keep renting. The calculator shows you how many months of lower mortgage payments it would take to offset the rent you paid while waiting — and estimates the equity you could have built in the meantime.
+  </div>
+
+  <!-- CALCULATOR CARD -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Run Your Numbers</div>
+      <div class="card-subtitle">Adjust any field below · defaults are pre-filled</div>
+    </div>
+    <div class="calc-body">
+
+      <!-- LEFT: INPUTS -->
+      <div class="calc-inputs">
 
         <div class="section-label">Home details</div>
         <div class="form-grid">
           <div class="field">
-            <label for="homePrice">
-              Home price
-              <span class="hint">Estimated purchase price</span>
-            </label>
-            <div class="input-prefix">
-              <span>$</span>
-              <input
-                type="text"
-                id="homePrice"
-                inputmode="decimal"
-                placeholder="450,000"
-                value="450000"
-              />
+            <label>Home price <span class="hint">Estimated purchase price</span></label>
+            <div class="input-wrap">
+              <span class="input-affix">$</span>
+              <input type="text" id="homePrice" inputmode="decimal" placeholder="450,000" value="450000">
             </div>
           </div>
-
           <div class="field">
-            <label for="downPaymentPercent">
-              Down payment %
-              <span class="hint">Of purchase price</span>
-            </label>
-            <div class="input-prefix">
-              <input
-                type="text"
-                id="downPaymentPercent"
-                inputmode="decimal"
-                placeholder="10"
-                value="10"
-              />
-              <span>%</span>
+            <label>Down payment <span class="hint">% of purchase price</span></label>
+            <div class="input-wrap">
+              <input type="text" id="downPaymentPercent" inputmode="decimal" placeholder="10" value="10">
+              <span class="input-affix suffix">%</span>
             </div>
           </div>
         </div>
@@ -367,491 +562,514 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="section-label">Mortgage interest rates</div>
         <div class="form-grid">
           <div class="field">
-            <label for="currentRate">
-              Today's rate
-              <span class="hint">Editable</span>
-            </label>
-            <div class="input-prefix">
-              <input
-                type="text"
-                id="currentRate"
-                inputmode="decimal"
-                value="6.25"
-              />
-              <span>%</span>
+            <label>Today's rate <span class="hint">Editable</span></label>
+            <div class="input-wrap">
+              <input type="text" id="currentRate" inputmode="decimal" value="6.25">
+              <span class="input-affix suffix">%</span>
             </div>
           </div>
-
           <div class="field">
-            <label for="targetRate">
-              Desired future rate
-              <span class="hint">What you're waiting for</span>
-            </label>
-            <div class="input-prefix">
-              <input
-                type="text"
-                id="targetRate"
-                inputmode="decimal"
-                placeholder="5.00"
-              />
-              <span>%</span>
+            <label>Desired future rate <span class="hint">What you're waiting for</span></label>
+            <div class="input-wrap">
+              <input type="text" id="targetRate" inputmode="decimal" placeholder="5.00">
+              <span class="input-affix suffix">%</span>
             </div>
           </div>
-
           <div class="field">
-            <label for="loanTermYears">
-              Loan term
-              <span class="hint">Years</span>
-            </label>
-            <div class="input-prefix">
-              <input
-                type="text"
-                id="loanTermYears"
-                inputmode="decimal"
-                value="30"
-              />
-              <span>yrs</span>
+            <label>Loan term <span class="hint">Years</span></label>
+            <div class="input-wrap">
+              <input type="text" id="loanTermYears" inputmode="decimal" value="30">
+              <span class="input-affix suffix">yrs</span>
             </div>
           </div>
         </div>
 
-        <div class="section-label">Rent & timing</div>
+        <div class="section-label">Rent &amp; timing</div>
         <div class="form-grid">
           <div class="field">
-            <label for="monthlyRent">
-              Current monthly rent
-            </label>
-            <div class="input-prefix">
-              <span>$</span>
-              <input
-                type="text"
-                id="monthlyRent"
-                inputmode="decimal"
-                placeholder="2,000"
-              />
+            <label>Current monthly rent</label>
+            <div class="input-wrap">
+              <span class="input-affix">$</span>
+              <input type="text" id="monthlyRent" inputmode="decimal" placeholder="2,000">
             </div>
           </div>
-
           <div class="field">
-            <label for="monthsWaiting">
-              Months you plan to keep renting
-              <span class="hint">While waiting for rates</span>
-            </label>
-            <input
-              type="text"
-              id="monthsWaiting"
-              inputmode="decimal"
-              placeholder="12"
-            />
+            <label>Months you plan to keep renting <span class="hint">While waiting for rates</span></label>
+            <input type="text" id="monthsWaiting" inputmode="decimal" placeholder="12" class="input-standalone">
           </div>
-
           <div class="field">
-            <label for="leaseRemaining">
-              Months left on current lease
-              <span class="hint">Info only (not used)</span>
-            </label>
-            <input
-              type="text"
-              id="leaseRemaining"
-              inputmode="decimal"
-              placeholder="e.g., 7"
-            />
+            <label>Months left on current lease <span class="hint">Info only · not used in math</span></label>
+            <input type="text" id="leaseRemaining" inputmode="decimal" placeholder="e.g., 7" class="input-standalone">
           </div>
         </div>
 
-        <div id="errorMessage" class="error">
+        <div id="errorMessage" class="error-msg">
           Please check your inputs — use numbers only (no symbols other than optional commas or decimal points).
         </div>
 
         <div class="btn-row">
-          <button type="button" class="primary" onclick="calculateCostOfWaiting()">
-            <span class="button-icon">📊</span>
-            <span>Calculate</span>
+          <button class="primary" onclick="calculateCostOfWaiting()">
+            <span>📊</span> Calculate
           </button>
-          <button type="button" class="secondary" onclick="emailResults()">
-            <span class="button-icon">✉️</span>
-            <span>Email Me My Results</span>
+          <button class="secondary" onclick="emailResults()">
+            <span>✉️</span> Email Me My Results
           </button>
         </div>
       </div>
 
-      <!-- RIGHT: Results -->
-      <div>
-        <div class="results" id="resultsBox">
-          <div class="results-header">
-            <div class="results-title">Your cost of waiting</div>
-            <div class="results-tag" id="resultsTag">Awaiting calculation</div>
-          </div>
-
-          <div class="results-grid">
-            <div class="metric">
-              <div class="metric-label">Monthly payment if you buy now</div>
-              <div class="metric-value" id="paymentNowDisplay">—</div>
-            </div>
-
-            <div class="metric">
-              <div class="metric-label">Monthly payment at your desired rate</div>
-              <div class="metric-value" id="paymentLaterDisplay">—</div>
-            </div>
-
-            <div class="metric">
-              <div class="metric-label">Monthly savings by waiting</div>
-              <div class="metric-value" id="monthlySavingsDisplay">—</div>
-            </div>
-
-            <div class="metric">
-              <div class="metric-label">Rent paid while you wait</div>
-              <div class="metric-value" id="totalRentDisplay">—</div>
-            </div>
-
-            <div class="metric">
-              <div class="metric-label">Time to break even after you buy</div>
-              <div class="metric-value highlight" id="breakEvenTimeDisplay">—</div>
-            </div>
-
-            <div class="metric">
-              <div class="metric-label">Estimated equity at your break-even point if you had bought today*</div>
-              <div class="metric-value" id="equityDisplay">—</div>
-            </div>
-
-            <div class="metric">
-              <div class="metric-label">Equity after your ownership period if you bought today (ignoring waiting)</div>
-              <div class="metric-value" id="equityNoWaitingDisplay">—</div>
-            </div>
-
-            <div class="metric">
-              <div class="metric-label">Lease info (not used in math)</div>
-              <div class="metric-value" id="leaseInfoDisplay">—</div>
-            </div>
-          </div>
-
-          <p class="note">
-            “Break even” here means how many months of lower mortgage payments at your desired rate
-            it would take to offset the rent you paid while waiting instead of buying at today’s rate.
-            The equity estimate reflects what your equity could be
-            <strong>at your break-even point, assuming you had bought today</strong>,
-            using a standard amortizing loan and
-            <strong>3% annual home price appreciation</strong>.
-            This is a simplified illustration — not a forecast or guarantee.
-          </p>
+      <!-- RIGHT: RESULTS -->
+      <div class="calc-results">
+        <div class="results-header">
+          <div class="card-title" style="font-size:18px;">Your cost of waiting</div>
+          <div class="results-tag pending" id="resultsTag">Awaiting calculation</div>
         </div>
 
-        <p class="lease-note">
-          Want help interpreting your numbers or plugging in more assumptions (taxes, insurance, appreciation, etc.)?
-          Reach out and we can review your situation together.
-        </p>
+        <div class="metrics-grid">
+          <div class="metric-box">
+            <div class="metric-label">Monthly payment if you buy now</div>
+            <div class="metric-value" id="paymentNowDisplay" style="font-size:18px;">—</div>
+            <div class="metric-sub" id="paymentNowSub"></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Monthly payment at desired rate</div>
+            <div class="metric-value" id="paymentLaterDisplay" style="font-size:18px;">—</div>
+            <div class="metric-sub" id="paymentLaterSub"></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Monthly savings by waiting</div>
+            <div class="metric-value" id="monthlySavingsDisplay" style="font-size:18px;">—</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Total rent paid while you wait</div>
+            <div class="metric-value" id="totalRentDisplay" style="font-size:18px;">—</div>
+          </div>
+          <div class="metric-box accent">
+            <div class="metric-label">Time to break even after you buy</div>
+            <div class="metric-value" id="breakEvenTimeDisplay">—</div>
+          </div>
+          <div class="metric-box accent">
+            <div class="metric-label">Est. equity at break-even if bought today*</div>
+            <div class="metric-value" id="equityDisplay">—</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Equity after ownership period only (ignoring waiting)</div>
+            <div class="metric-value" id="equityNoWaitingDisplay" style="font-size:18px;">—</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Lease info (not used in math)</div>
+            <div class="metric-value" id="leaseInfoDisplay" style="font-size:16px; color: var(--muted);">—</div>
+          </div>
+        </div>
+
+        <div class="note-box">
+          <strong>How "break even" is calculated:</strong> It's the number of months of lower mortgage payments at your desired rate needed to offset the rent paid while waiting instead of buying today. Equity estimate assumes you bought today, using a standard amortizing loan and <strong>3% annual home appreciation</strong>. This is a simplified illustration — not a forecast or guarantee.
+        </div>
       </div>
     </div>
   </div>
 
-  <script>
-    function sanitizeNumberInput(value) {
-      if (typeof value !== "string") return NaN;
-      const cleaned = value.replace(/,/g, "").trim();
-      if (cleaned === "") return NaN;
-      return parseFloat(cleaned);
+  <!-- CHART CARD -->
+  <div class="card">
+    <div class="card-header" style="padding-bottom: 0;">
+      <div class="card-title">Mortgage Payment vs. Rate</div>
+      <div class="card-subtitle">How your monthly P&amp;I payment changes as rates shift · based on your inputs</div>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchChart('payment', event)">Monthly Payment vs. Rate</button>
+      <button class="tab-btn" onclick="switchChart('breakeven', event)">Break-Even Timeline</button>
+      <button class="tab-btn" onclick="switchChart('equity', event)">Equity Growth</button>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="mainChart" height="300"></canvas>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-card">
+    <h2>Ready to Stop<br><em>Waiting &amp; Start Building?</em></h2>
+    <p>Your numbers are a starting point. Let's plug in taxes, insurance, actual appreciation trends, and your specific situation to build a plan that makes sense for you.</p>
+    <a class="cta-btn" href="https://the-jason-kaczmarski-team-springfield-tn.remax.com/ask/9539cc58d5c28bd9c77d6755120798e0">
+      Talk to Jason →
+    </a>
+    <div class="cta-sub">Free consultation &nbsp;·&nbsp; No obligation &nbsp;·&nbsp; Responds same day</div>
+  </div>
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div class="footer">
+  Jason Kaczmarski &nbsp;•&nbsp; RE/MAX 1st Choice &nbsp;•&nbsp;
+  <a href="tel:6153847355">615-384-7355</a>
+  <div class="disclaimer">
+    This calculator is for illustrative purposes only. All figures are estimates based on user-provided inputs and a 3% annual home appreciation assumption. Results are not a guarantee, financial advice, or commitment to lend. Consult a licensed mortgage professional and financial advisor before making any real estate decisions. © 2026 Jason Kaczmarski Team · RE/MAX 1st Choice.
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+  /* ── HELPERS ── */
+  function sanitize(value) {
+    if (typeof value !== 'string') return NaN;
+    const cleaned = value.replace(/,/g, '').trim();
+    return cleaned === '' ? NaN : parseFloat(cleaned);
+  }
+
+  function getNum(id, def) {
+    const el = document.getElementById(id);
+    if (!el) return def;
+    const cleaned = el.value.replace(/,/g, '').trim();
+    if (cleaned === '') return def;
+    const n = parseFloat(cleaned);
+    return isFinite(n) ? n : NaN;
+  }
+
+  function fmtCurrency(v) {
+    if (!isFinite(v)) return '—';
+    return v.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+  }
+
+  function fmtCurrencyCents(v) {
+    if (!isFinite(v)) return '—';
+    return v.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  function fmtMonths(months) {
+    if (!isFinite(months) || months < 0) return '—';
+    const rounded = Math.ceil(months);
+    const years = Math.floor(rounded / 12);
+    const rem = rounded % 12;
+    if (years === 0) return rounded + (rounded === 1 ? ' month' : ' months');
+    let t = years + (years === 1 ? ' year' : ' years');
+    if (rem > 0) t += ' ' + rem + (rem === 1 ? ' month' : ' months');
+    return t;
+  }
+
+  function calcPayment(principal, rateAnnual, years) {
+    const r = (rateAnnual / 100) / 12;
+    const n = years * 12;
+    if (r <= 0 || n <= 0 || principal <= 0) return NaN;
+    const factor = Math.pow(1 + r, n);
+    return principal * (r * factor) / (factor - 1);
+  }
+
+  function remainingBalance(principal, rateAnnual, years, monthsPaid) {
+    const r = (rateAnnual / 100) / 12;
+    const n = years * 12;
+    if (r <= 0 || n <= 0 || principal <= 0 || monthsPaid < 0) return NaN;
+    const m = Math.min(monthsPaid, n);
+    const factor = Math.pow(1 + r, n);
+    const factorPaid = Math.pow(1 + r, m);
+    return principal * (factor - factorPaid) / (factor - 1);
+  }
+
+  /* ── STATE ── */
+  let lastCalcData = null;
+  let currentChart = null;
+  let activeChartType = 'payment';
+
+  /* ── CALCULATE ── */
+  function calculateCostOfWaiting() {
+    const errorEl = document.getElementById('errorMessage');
+    const tagEl = document.getElementById('resultsTag');
+
+    const homePrice          = getNum('homePrice', 450000);
+    const downPaymentPercent = getNum('downPaymentPercent', 10);
+    const currentRate        = getNum('currentRate', 6.25);
+    const targetRate         = getNum('targetRate', 5.0);
+    const loanTermYears      = getNum('loanTermYears', 30);
+    const monthlyRent        = getNum('monthlyRent', 2000);
+    const monthsWaiting      = getNum('monthsWaiting', 12);
+
+    const leaseRaw = document.getElementById('leaseRemaining').value.trim();
+    const leaseRemaining = sanitize(leaseRaw);
+
+    if ([homePrice, downPaymentPercent, currentRate, targetRate, loanTermYears, monthlyRent, monthsWaiting].some(v => !isFinite(v))) {
+      errorEl.style.display = 'block';
+      tagEl.textContent = 'Error in inputs';
+      tagEl.className = 'results-tag pending';
+      updateDisplay(null);
+      return;
+    }
+    errorEl.style.display = 'none';
+
+    const loanAmount   = homePrice * (1 - downPaymentPercent / 100);
+    const paymentNow   = calcPayment(loanAmount, currentRate, loanTermYears);
+    const paymentLater = calcPayment(loanAmount, targetRate, loanTermYears);
+    const monthlySavings = paymentNow - paymentLater;
+    const totalRent    = monthlyRent * monthsWaiting;
+    let monthsToBreakEven = NaN;
+    if (monthlySavings > 0) monthsToBreakEven = totalRent / monthlySavings;
+
+    let equityAtBreakEven = NaN;
+    if (isFinite(monthsToBreakEven) && monthsToBreakEven > 0) {
+      const totalMonths = Math.ceil(monthsWaiting + monthsToBreakEven);
+      const bal = remainingBalance(loanAmount, currentRate, loanTermYears, totalMonths);
+      const appVal = homePrice * Math.pow(1.03, totalMonths / 12);
+      equityAtBreakEven = appVal - bal;
     }
 
-    // Use a default value if the field is blank; error out only if it's non-numeric
-    function getNumberOrDefault(id, defaultValue) {
-      const el = document.getElementById(id);
-      if (!el) return defaultValue;
-
-      const raw = el.value;
-      const cleaned = raw.replace(/,/g, "").trim();
-
-      if (cleaned === "") {
-        return defaultValue;
-      }
-
-      const num = parseFloat(cleaned);
-      return isFinite(num) ? num : NaN;
+    let equityOwnershipOnly = NaN;
+    if (isFinite(monthsToBreakEven) && monthsToBreakEven > 0) {
+      const mo = Math.ceil(monthsToBreakEven);
+      const bal = remainingBalance(loanAmount, currentRate, loanTermYears, mo);
+      const appVal = homePrice * Math.pow(1.03, mo / 12);
+      equityOwnershipOnly = appVal - bal;
     }
 
-    function formatCurrency(value) {
-      if (!isFinite(value)) return "—";
-      return value.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 0
+    const leaseInfo = leaseRaw === ''
+      ? 'Not provided'
+      : isFinite(leaseRemaining)
+        ? leaseRemaining + (leaseRemaining === 1 ? ' month left' : ' months left')
+        : 'Not provided';
+
+    if (targetRate >= currentRate) {
+      tagEl.textContent = 'No savings from waiting';
+      tagEl.className = 'results-tag pending';
+    } else {
+      tagEl.textContent = 'Calculation complete';
+      tagEl.className = 'results-tag';
+    }
+
+    lastCalcData = { homePrice, loanAmount, downPaymentPercent, currentRate, targetRate, loanTermYears, monthlyRent, monthsWaiting, paymentNow, paymentLater, monthlySavings, totalRent, monthsToBreakEven, equityAtBreakEven, equityOwnershipOnly, leaseInfo };
+    updateDisplay(lastCalcData);
+    buildChart(activeChartType);
+  }
+
+  /* ── DISPLAY ── */
+  function updateDisplay(data) {
+    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+    if (!data) {
+      ['paymentNowDisplay','paymentLaterDisplay','monthlySavingsDisplay','totalRentDisplay','breakEvenTimeDisplay','equityDisplay','equityNoWaitingDisplay','leaseInfoDisplay'].forEach(id => set(id, '—'));
+      return;
+    }
+    set('paymentNowDisplay',      isFinite(data.paymentNow)          ? fmtCurrencyCents(data.paymentNow) + ' / mo'     : '—');
+    set('paymentLaterDisplay',    isFinite(data.paymentLater)        ? fmtCurrencyCents(data.paymentLater) + ' / mo'   : '—');
+    set('monthlySavingsDisplay',  isFinite(data.monthlySavings)      ? fmtCurrencyCents(data.monthlySavings) + ' / mo' : '—');
+    set('totalRentDisplay',       isFinite(data.totalRent)           ? fmtCurrency(data.totalRent)                     : '—');
+    set('breakEvenTimeDisplay',   isFinite(data.monthsToBreakEven) && data.monthsToBreakEven > 0 ? fmtMonths(data.monthsToBreakEven) : '—');
+    set('equityDisplay',          isFinite(data.equityAtBreakEven)   ? fmtCurrency(data.equityAtBreakEven)             : '—');
+    set('equityNoWaitingDisplay', isFinite(data.equityOwnershipOnly) ? fmtCurrency(data.equityOwnershipOnly)           : '—');
+    set('leaseInfoDisplay',       data.leaseInfo || '—');
+  }
+
+  /* ── CHARTS ── */
+  function buildChart(type) {
+    activeChartType = type;
+    if (currentChart) { currentChart.destroy(); currentChart = null; }
+    const ctx = document.getElementById('mainChart').getContext('2d');
+
+    const d = lastCalcData;
+
+    if (type === 'payment') {
+      // Monthly payment across a range of rates
+      const rates = [];
+      for (let r = 3.0; r <= 9.0; r += 0.25) rates.push(Math.round(r * 100) / 100);
+      const payments = rates.map(r => {
+        if (!d) return 0;
+        return calcPayment(d.loanAmount, r, d ? d.loanTermYears : 30);
+      });
+
+      const todayIdx = d ? rates.findIndex(r => Math.abs(r - d.currentRate) < 0.13) : -1;
+      const targetIdx = d ? rates.findIndex(r => Math.abs(r - d.targetRate) < 0.13) : -1;
+
+      const pointColors = rates.map((_, i) => {
+        if (i === todayIdx) return '#d81f26';
+        if (i === targetIdx) return '#f0b429';
+        return '#1f4fa3';
+      });
+      const pointSizes = rates.map((_, i) => (i === todayIdx || i === targetIdx) ? 8 : 4);
+
+      currentChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: rates.map(r => r.toFixed(2) + '%'),
+          datasets: [{
+            label: 'Monthly P&I Payment',
+            data: payments,
+            borderColor: '#1f4fa3',
+            backgroundColor: 'rgba(31,79,163,0.08)',
+            borderWidth: 2.5,
+            pointBackgroundColor: pointColors,
+            pointRadius: pointSizes,
+            pointHoverRadius: 9,
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: chartOptions('$', v => '$' + Math.round(v).toLocaleString(), d ? [
+          { label: "Today's rate (" + d.currentRate + '%)', x: todayIdx, color: '#d81f26' },
+          { label: 'Target rate (' + d.targetRate + '%)', x: targetIdx, color: '#f0b429' }
+        ] : [])
       });
     }
 
-    function formatCurrencyWithCents(value) {
-      if (!isFinite(value)) return "—";
-      return value.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      });
-    }
-
-    function formatMonthsToYearsMonths(months) {
-      if (!isFinite(months) || months < 0) return "—";
-      const rounded = Math.ceil(months);
-      const years = Math.floor(rounded / 12);
-      const remainingMonths = rounded % 12;
-
-      if (years === 0) {
-        return rounded + (rounded === 1 ? " month" : " months");
-      }
-
-      let text = years + (years === 1 ? " year" : " years");
-      if (remainingMonths > 0) {
-        text += " " + remainingMonths + (remainingMonths === 1 ? " month" : " months");
-      }
-      return text;
-    }
-
-    function calculateMonthlyPayment(principal, annualRatePercent, years) {
-      const r = (annualRatePercent / 100) / 12;
-      const n = years * 12;
-      if (r <= 0 || n <= 0 || principal <= 0) return NaN;
-      const factor = Math.pow(1 + r, n);
-      const payment = principal * (r * factor) / (factor - 1);
-      return payment;
-    }
-
-    function remainingBalance(principal, annualRatePercent, years, monthsPaid) {
-      const r = (annualRatePercent / 100) / 12;
-      const n = years * 12;
-      if (r <= 0 || n <= 0 || principal <= 0 || monthsPaid < 0) return NaN;
-      const m = Math.min(monthsPaid, n);
-      const factor = Math.pow(1 + r, n);
-      const factorPaid = Math.pow(1 + r, m);
-      const balance = principal * (factor - factorPaid) / (factor - 1);
-      return balance;
-    }
-
-    function calculateCostOfWaiting() {
-      const errorEl = document.getElementById("errorMessage");
-      const tagEl = document.getElementById("resultsTag");
-
-      // Use defaults when fields are blank
-      const homePrice = getNumberOrDefault("homePrice", 450000);
-      const downPaymentPercent = getNumberOrDefault("downPaymentPercent", 10);
-      const currentRate = getNumberOrDefault("currentRate", 6.25);
-      const targetRate = getNumberOrDefault("targetRate", 5.0);
-      const loanTermYears = getNumberOrDefault("loanTermYears", 30);
-      const monthlyRent = getNumberOrDefault("monthlyRent", 2000);
-      const monthsWaiting = getNumberOrDefault("monthsWaiting", 12);
-
-      const leaseRemainingRaw = document.getElementById("leaseRemaining").value.trim();
-      const leaseRemaining = sanitizeNumberInput(leaseRemainingRaw);
-
-      // Validation: only fail if user types non-numeric
-      if (
-        !isFinite(homePrice) ||
-        !isFinite(downPaymentPercent) ||
-        !isFinite(currentRate) ||
-        !isFinite(targetRate) ||
-        !isFinite(loanTermYears) ||
-        !isFinite(monthlyRent) ||
-        !isFinite(monthsWaiting)
-      ) {
-        errorEl.style.display = "block";
-        tagEl.textContent = "Error in inputs";
-        updateResultsDisplay(null);
+    else if (type === 'breakeven') {
+      if (!d || !isFinite(d.monthsToBreakEven)) {
+        currentChart = new Chart(ctx, { type: 'bar', data: { labels: ['Run calculation first'], datasets: [{ data: [0] }] }, options: { plugins: { legend: { display: false } } } });
         return;
       }
+      const labels = ['Rent paid\nwhile waiting', 'Savings\nper month', 'Months to\nbreak even'];
+      const values = [d.totalRent, d.monthlySavings, d.monthsToBreakEven];
+      const colors = ['rgba(216,31,38,0.7)', 'rgba(16,163,74,0.7)', 'rgba(31,79,163,0.7)'];
 
-      errorEl.style.display = "none";
-
-      if (targetRate >= currentRate) {
-        tagEl.textContent = "No savings from waiting";
-      } else {
-        tagEl.textContent = "Calculation complete";
-      }
-
-      const downPaymentAmount = homePrice * (downPaymentPercent / 100);
-      const loanAmount = homePrice - downPaymentAmount;
-
-      const paymentNow = calculateMonthlyPayment(loanAmount, currentRate, loanTermYears);
-      const paymentLater = calculateMonthlyPayment(loanAmount, targetRate, loanTermYears);
-
-      const monthlySavings = paymentNow - paymentLater;
-      const totalRentWhileWaiting = monthlyRent * monthsWaiting;
-
-      let monthsToBreakEven = NaN;
-      if (monthlySavings > 0 && totalRentWhileWaiting >= 0) {
-        monthsToBreakEven = totalRentWhileWaiting / monthlySavings;
-      }
-
-      // Equity at break-even point if buyer had bought today (includes waiting + catch-up)
-      let potentialEquityAtBreakEven = NaN;
-      if (
-        isFinite(monthsToBreakEven) &&
-        monthsToBreakEven > 0 &&
-        isFinite(monthsWaiting) &&
-        monthsWaiting >= 0
-      ) {
-        const totalMonthsFromToday = Math.ceil(monthsWaiting + monthsToBreakEven);
-        const balanceThen = remainingBalance(loanAmount, currentRate, loanTermYears, totalMonthsFromToday);
-        const appreciationRateAnnual = 0.03;
-        const yearsTotal = totalMonthsFromToday / 12;
-        const appreciatedValue = homePrice * Math.pow(1 + appreciationRateAnnual, yearsTotal);
-        potentialEquityAtBreakEven = appreciatedValue - balanceThen;
-      }
-
-      // Equity after ownership period only (ignoring waiting time)
-      let equityIgnoringWaiting = NaN;
-      if (isFinite(monthsToBreakEven) && monthsToBreakEven > 0) {
-        const monthsOwned = Math.ceil(monthsToBreakEven);
-        const balanceOwned = remainingBalance(loanAmount, currentRate, loanTermYears, monthsOwned);
-        const appreciationRateAnnual = 0.03;
-        const yearsOwned = monthsOwned / 12;
-        const valueOwned = homePrice * Math.pow(1 + appreciationRateAnnual, yearsOwned);
-        equityIgnoringWaiting = valueOwned - balanceOwned;
-      }
-
-      const leaseInfo =
-        leaseRemainingRaw === ""
-          ? "Not provided"
-          : isFinite(leaseRemaining)
-          ? leaseRemaining + (leaseRemaining === 1 ? " month left" : " months left")
-          : "Not provided";
-
-      updateResultsDisplay({
-        paymentNow,
-        paymentLater,
-        monthlySavings,
-        totalRentWhileWaiting,
-        monthsToBreakEven,
-        leaseInfo,
-        potentialEquityAtBreakEven,
-        equityIgnoringWaiting
+      currentChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Rent paid while waiting', 'Monthly savings by waiting', 'Months to break even'],
+          datasets: [{
+            data: values,
+            backgroundColor: colors,
+            borderColor: colors.map(c => c.replace('0.7', '1')),
+            borderWidth: 2,
+            borderRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#1a1a2e',
+              titleColor: '#f0b429',
+              bodyColor: 'white',
+              padding: 12,
+              cornerRadius: 8,
+              callbacks: {
+                label: ctx => {
+                  const i = ctx.dataIndex;
+                  if (i === 0) return ' ' + fmtCurrency(ctx.parsed.y);
+                  if (i === 1) return ' ' + fmtCurrencyCents(ctx.parsed.y) + '/mo';
+                  return ' ' + fmtMonths(ctx.parsed.y);
+                }
+              }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { family: "'DM Sans',sans-serif", size: 12 }, color: '#64748b' } },
+            y: { grid: { color: 'rgba(0,0,0,.05)' }, ticks: { display: false } }
+          }
+        }
       });
     }
 
-    function updateResultsDisplay(data) {
-      const paymentNowEl = document.getElementById("paymentNowDisplay");
-      const paymentLaterEl = document.getElementById("paymentLaterDisplay");
-      const monthlySavingsEl = document.getElementById("monthlySavingsDisplay");
-      const totalRentEl = document.getElementById("totalRentDisplay");
-      const breakEvenEl = document.getElementById("breakEvenTimeDisplay");
-      const equityEl = document.getElementById("equityDisplay");
-      const equityNoWaitingEl = document.getElementById("equityNoWaitingDisplay");
-      const leaseInfoEl = document.getElementById("leaseInfoDisplay");
-
-      if (!data) {
-        paymentNowEl.textContent = "—";
-        paymentLaterEl.textContent = "—";
-        monthlySavingsEl.textContent = "—";
-        totalRentEl.textContent = "—";
-        breakEvenEl.textContent = "—";
-        equityEl.textContent = "—";
-        equityNoWaitingEl.textContent = "—";
-        leaseInfoEl.textContent = "—";
+    else if (type === 'equity') {
+      if (!d) {
+        currentChart = new Chart(ctx, { type: 'line', data: { labels: [], datasets: [] }, options: {} });
         return;
       }
+      const monthRange = [];
+      for (let m = 0; m <= 120; m += 6) monthRange.push(m);
 
-      const {
-        paymentNow,
-        paymentLater,
-        monthlySavings,
-        totalRentWhileWaiting,
-        monthsToBreakEven,
-        leaseInfo,
-        potentialEquityAtBreakEven,
-        equityIgnoringWaiting
-      } = data;
+      const equityNow = monthRange.map(m => {
+        const bal = remainingBalance(d.loanAmount, d.currentRate, d.loanTermYears, m);
+        const val = d.homePrice * Math.pow(1.03, m / 12);
+        return val - bal;
+      });
 
-      paymentNowEl.textContent = isFinite(paymentNow)
-        ? formatCurrencyWithCents(paymentNow) + " / mo"
-        : "—";
-
-      paymentLaterEl.textContent = isFinite(paymentLater)
-        ? formatCurrencyWithCents(paymentLater) + " / mo"
-        : "—";
-
-      monthlySavingsEl.textContent = isFinite(monthlySavings)
-        ? formatCurrencyWithCents(monthlySavings) + " / mo"
-        : "—";
-
-      totalRentEl.textContent = isFinite(totalRentWhileWaiting)
-        ? formatCurrency(totalRentWhileWaiting)
-        : "—";
-
-      breakEvenEl.textContent = isFinite(monthsToBreakEven) && monthsToBreakEven > 0
-        ? formatMonthsToYearsMonths(monthsToBreakEven)
-        : "—";
-
-      equityEl.textContent = isFinite(potentialEquityAtBreakEven)
-        ? formatCurrency(potentialEquityAtBreakEven)
-        : "—";
-
-      equityNoWaitingEl.textContent = isFinite(equityIgnoringWaiting)
-        ? formatCurrency(equityIgnoringWaiting)
-        : "—";
-
-      leaseInfoEl.textContent = leaseInfo || "—";
+      currentChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: monthRange.map(m => m === 0 ? 'Today' : (m < 12 ? m + 'mo' : (m / 12).toFixed(0) + 'yr')),
+          datasets: [{
+            label: 'Estimated Equity if Bought Today',
+            data: equityNow,
+            borderColor: '#16a34a',
+            backgroundColor: 'rgba(22,163,74,0.08)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#16a34a',
+            pointRadius: 4,
+            pointHoverRadius: 7,
+            fill: true,
+            tension: 0.35
+          }]
+        },
+        options: chartOptions('$equity', v => fmtCurrency(v))
+      });
     }
+  }
 
-    function emailResults() {
-      // Run calculation first to ensure results are current
-      calculateCostOfWaiting();
+  function chartOptions(type, tooltipFn, annotations) {
+    return {
+      responsive: true,
+      maintainAspectRatio: true,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: {
+          position: 'top', align: 'end',
+          labels: { font: { family: "'DM Sans',sans-serif", size: 12 }, color: '#64748b', usePointStyle: true, pointStyleWidth: 10, padding: 20 }
+        },
+        tooltip: {
+          backgroundColor: '#1a1a2e', titleColor: '#f0b429', bodyColor: 'white',
+          padding: 12, cornerRadius: 8,
+          titleFont: { family: "'DM Sans',sans-serif", weight: '600' },
+          bodyFont: { family: "'DM Sans',sans-serif" },
+          callbacks: {
+            label: ctx => ' ' + ctx.dataset.label + ': ' + tooltipFn(ctx.parsed.y)
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { family: "'DM Sans',sans-serif", size: 11 }, color: '#64748b', maxRotation: 45 } },
+        y: { grid: { color: 'rgba(0,0,0,.05)' }, ticks: { font: { family: "'DM Sans',sans-serif", size: 11 }, color: '#64748b', callback: v => fmtCurrency(v) } }
+      }
+    };
+  }
 
-      const homePrice = document.getElementById("homePrice").value.trim();
-      const downPaymentPercent = document.getElementById("downPaymentPercent").value.trim();
-      const currentRate = document.getElementById("currentRate").value.trim();
-      const targetRate = document.getElementById("targetRate").value.trim();
-      const loanTermYears = document.getElementById("loanTermYears").value.trim();
-      const monthlyRent = document.getElementById("monthlyRent").value.trim();
-      const monthsWaiting = document.getElementById("monthsWaiting").value.trim();
-      const leaseRemaining = document.getElementById("leaseRemaining").value.trim();
+  function switchChart(type, e) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    buildChart(type);
+  }
 
-      const paymentNow = document.getElementById("paymentNowDisplay").textContent;
-      const paymentLater = document.getElementById("paymentLaterDisplay").textContent;
-      const monthlySavings = document.getElementById("monthlySavingsDisplay").textContent;
-      const totalRentWhileWaiting = document.getElementById("totalRentDisplay").textContent;
-      const breakEvenTime = document.getElementById("breakEvenTimeDisplay").textContent;
-      const equityEstimate = document.getElementById("equityDisplay").textContent;
-      const equityIgnoringWaiting = document.getElementById("equityNoWaitingDisplay").textContent;
+  /* ── EMAIL ── */
+  function emailResults() {
+    calculateCostOfWaiting();
+    const get = id => document.getElementById(id)?.value?.trim() || '';
+    const getResult = id => document.getElementById(id)?.textContent || '—';
 
-      const subject = "Cost of Waiting Calculator Results";
+    const lines = [
+      'Hi Jason,',
+      '',
+      'Here are my Cost of Waiting calculator results:',
+      '',
+      'INPUTS',
+      '──────────────────────',
+      'Home price: $' + get('homePrice'),
+      'Down payment: ' + get('downPaymentPercent') + '%',
+      "Today's rate: " + get('currentRate') + '%',
+      'Desired future rate: ' + get('targetRate') + '%',
+      'Loan term: ' + get('loanTermYears') + ' years',
+      'Monthly rent: $' + get('monthlyRent'),
+      'Months planning to rent: ' + get('monthsWaiting'),
+      'Months left on lease: ' + (get('leaseRemaining') || 'Not provided'),
+      '',
+      'RESULTS',
+      '──────────────────────',
+      'Monthly payment now: ' + getResult('paymentNowDisplay'),
+      'Monthly payment at desired rate: ' + getResult('paymentLaterDisplay'),
+      'Monthly savings by waiting: ' + getResult('monthlySavingsDisplay'),
+      'Rent paid while waiting: ' + getResult('totalRentDisplay'),
+      'Time to break even: ' + getResult('breakEvenTimeDisplay'),
+      'Equity at break-even if bought today: ' + getResult('equityDisplay'),
+      'Equity after ownership period only: ' + getResult('equityNoWaitingDisplay'),
+      '',
+      'Assumes standard amortizing loan · 3% annual home price appreciation.',
+      '',
+      "Please reach out so we can talk through what this means for my situation.",
+      '',
+      'Thanks!'
+    ];
 
-      const bodyLines = [
-        "Hi Jason,",
-        "",
-        "Here are my Cost of Waiting calculator results:",
-        "",
-        "Inputs:",
-        "----------------------",
-        "Home price: $" + homePrice,
-        "Down payment %: " + downPaymentPercent + "%",
-        "Today's rate: " + currentRate + "%", 
-        "Desired future rate: " + targetRate + "%", 
-        "Loan term: " + loanTermYears + " years",
-        "",
-        "Current monthly rent: $" + monthlyRent,
-        "Months I plan to keep renting while waiting: " + monthsWaiting,
-        "Months left on my lease (info only): " + (leaseRemaining || "Not provided"),
-        "",
-        "Results:",
-        "----------------------",
-        "Monthly payment if I buy now: " + paymentNow,
-        "Monthly payment at my desired rate: " + paymentLater,
-        "Monthly savings by waiting: " + monthlySavings,
-        "Rent paid while I wait: " + totalRentWhileWaiting,
-        "Time to break even after I buy: " + breakEvenTime,
-        "Estimated equity at my break-even point if I had bought today: " + equityEstimate,
-        "Equity after my ownership period if I bought today (ignoring waiting): " + equityIgnoringWaiting,
-        "",
-        "Notes:",
-        "This calculator assumes a standard amortizing loan and 3% annual home price appreciation.",
-        "It focuses on big-picture trade-offs and is not a guarantee or full financial plan.",
-        "",
-        "Please reach out so we can talk through what this might mean for my situation.",
-        "",
-        "Thanks!"
-      ];
+    const subject = 'Cost of Waiting Calculator Results';
+    const body = encodeURIComponent(lines.join('\n'));
+    window.location.href = 'mailto:jason@jasonknashville.com?subject=' + encodeURIComponent(subject) + '&body=' + body;
+  }
 
-      const body = encodeURIComponent(bodyLines.join("\n"));
-      const recipient = "jason@jasonknashville.com";
-
-      window.location.href = "mailto:" + recipient + "?subject=" + encodeURIComponent(subject) + "&body=" + body;
-    }
-  </script>
+  /* ── INIT ── */
+  window.addEventListener('load', () => {
+    buildChart('payment');
+  });
+</script>
 </body>
 </html>
